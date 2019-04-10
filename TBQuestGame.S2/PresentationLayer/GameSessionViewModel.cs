@@ -260,7 +260,7 @@ namespace TBQuestGame.PresentationLayer
         #endregion
 
         #region PROPERTIES
-        //
+        // Test
         // Gets / Sets the current GameMap
         //
         public Map GameMap
