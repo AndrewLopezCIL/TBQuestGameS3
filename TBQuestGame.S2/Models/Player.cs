@@ -236,6 +236,7 @@ namespace TBQuestGame.Models
                         gsm.EnemyName = fightingEnemy.Name;
                         GSV.EnemyPicture.Source = gsm.Player.currentlyAttacking.PictureSource;
                         GSV.enemyStatsWindow.EnemyStatsPicture.Source = gsm.Player.currentlyAttacking.PictureSource;
+                        GSV.enemyStatsWindow.EnemyStatsPicture.Visibility = System.Windows.Visibility.Visible; 
                     }
                     if (fightingEnemy.IsAlive == true)
             {
@@ -261,6 +262,7 @@ namespace TBQuestGame.Models
                             fightingEnemy.onDeathRewardPlayer(gsm, fightingEnemy);
                             GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Hidden;
                             fightingEnemy.AttackingPlayer = false;
+                            GSV.enemyStatsWindow.EnemyStatsPicture.Visibility = System.Windows.Visibility.Hidden;
                                     foreach (Enemy enemy in gsm.CurrentEnemies)
                                     {
                                         if (enemy.SelectedToFight == true)

@@ -339,6 +339,9 @@ namespace TBQuestGame.PresentationLayer
                 }
             }
             EnemySelected = true;  
+            //
+            // Most likely where the stacked damage problem is occuring
+            //
             foreach (Enemy E in CurrentEnemies)
             {
 
@@ -365,6 +368,7 @@ namespace TBQuestGame.PresentationLayer
                         EnemyHealth = E.Health;
                         EnemyLevel = E.Level;
                         gsv.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
+                        gsv.enemyStatsWindow.EnemyStatsPicture.Visibility = System.Windows.Visibility.Visible;
                         gsv.EnemyHealthDisplay.Maximum = E.MaxHealth;
                         gsv.EnemyHealthDisplay.Value = E.Health;
                         gsv.EnemyHealthDisplay.Minimum = 0;
