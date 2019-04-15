@@ -60,8 +60,8 @@ namespace TBQuestGame.PresentationLayer
                                 gsm.Player.Inventory.Add(gsm.GameMap.CurrentLocation.LootableItems[item]);
                                 gsm.GameMap.CurrentLocation.LootableItems.RemoveAt(item);
                                 break;
-                            }
-                            else
+                            } 
+                            else if(gsm.Player.Inventory[obj].Name != gsm.GameMap.CurrentLocation.LootableItems[item].Name)
                             {
                                 gsm.Player.Inventory.Add(gsm.GameMap.CurrentLocation.LootableItems[item]);
                                 gsm.GameMap.CurrentLocation.LootableItems.RemoveAt(item);
@@ -231,10 +231,65 @@ namespace TBQuestGame.PresentationLayer
                         gsm.Player.Inventory.RemoveAt(item);
 
                     }
-                }
-                else if (gsm.Player.Inventory[item].HasPlayerInventorySelection == false)
-                {
+                } 
+            }
+        }
 
+        private void DropAll_Click(object sender, RoutedEventArgs e)
+        {
+            for (int item = 0; item < gsm.Player.Inventory.Count; item++)
+            {
+                if (gsm.Player.Inventory[item].HasPlayerInventorySelection == true)
+                {
+                    if (gsm.Player.Inventory[item].ItemStackCount > 1)
+                    {
+                         
+                        bool found = false;
+                        for (int items = 0; items < gsm.GameMap.CurrentLocation.LootableItems.Count; items++)
+                        {
+
+                            if (gsm.GameMap.CurrentLocation.LootableItems[items].Name == gsm.Player.Inventory[item].Name)
+                            {
+                                gsm.GameMap.CurrentLocation.LootableItems[items].ItemStackCount += gsm.Player.Inventory[item].ItemStackCount;
+                                found = true;
+                                gsm.Player.Inventory.RemoveAt(item);
+                                break;
+                            }
+                            else if (gsm.GameMap.CurrentLocation.LootableItems[items].Name != gsm.Player.Inventory[item].Name)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found == false)
+                        {
+                            gsm.GameMap.CurrentLocation.LootableItems.Add(gsm.Player.Inventory[item]);
+                        }
+                    }
+                    else if (gsm.Player.Inventory[item].ItemStackCount == 1)
+                    {
+
+                        bool found = false;
+                        for (int items = 0; items < gsm.GameMap.CurrentLocation.LootableItems.Count; items++)
+                        {
+
+                            if (gsm.GameMap.CurrentLocation.LootableItems[items].Name == gsm.Player.Inventory[item].Name)
+                            {
+                                gsm.GameMap.CurrentLocation.LootableItems[items].ItemStackCount += 1;
+                                found = true;
+                                break;
+                            }
+                            else if (gsm.GameMap.CurrentLocation.LootableItems[items].Name != gsm.Player.Inventory[item].Name)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found == false)
+                        {
+                            gsm.GameMap.CurrentLocation.LootableItems.Add(gsm.Player.Inventory[item]);
+                        }
+                        gsm.Player.Inventory.RemoveAt(item);
+
+                    }
                 }
             }
         }

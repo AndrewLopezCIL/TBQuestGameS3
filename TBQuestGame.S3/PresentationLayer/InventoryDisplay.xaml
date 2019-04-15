@@ -34,7 +34,7 @@
         </TabControl>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
         <Button x:Name="DropItem" Content="Drop" Width="75" Height="25" Margin="0,0,10,0" Click="DropItem_Click"/>
-        <Button x:Name="DropAll" Content="Drop All" Width="75" Height="25"/>
+        <Button x:Name="DropAll" Content="Drop All" Width="75" Height="25" Click="DropAll_Click"/>
         </StackPanel>
     </Grid>
 </Window>
