@@ -10,10 +10,15 @@ namespace TBQuestGame.Models.Items
 {
     public class BasicHealingPotion : Item
     {
-        public GameSessionViewModel viewModel;
+        /// <summary>
+        /// BASIC HEALING POTION WILL ONLY LAST 8 SECONDS/TICKS
+        /// </summary>
+        public GameSessionViewModel gsm;
+        public GameSessionView gsv;
         private double _healingAMT;
         public DispatcherTimer healingTimer = new System.Windows.Threading.DispatcherTimer();
         public DispatcherTimer healingCooldown = new System.Windows.Threading.DispatcherTimer();
+        public int timerCount = 0;
         public double HealingIncrement
         {
             get { return _healingAMT; }
@@ -50,18 +55,18 @@ namespace TBQuestGame.Models.Items
                 // Remove item from player's inventory if the item's stack count is 1
                 // Otherwise, decrement the ItemStackCount if there is more than 1
                 //
-                for (int item = 0; item < viewModel.Player.Inventory.Count; item++)
+                for (int item = 0; item < gsm.Player.Inventory.Count; item++)
                 {
-                    if(viewModel.Player.Inventory[item].ID == this.ID)
+                    if(gsm.Player.Inventory[item].ID == this.ID)
                     {
-                        if (viewModel.Player.Inventory[item].ItemStackCount == 1)
+                        if (gsm.Player.Inventory[item].ItemStackCount == 1)
                         {
-                            viewModel.Player.Inventory.RemoveAt(item);
+                            gsm.Player.Inventory.RemoveAt(item);
                             this.ItemStackCount -= 1;
                         }
-                        else if (viewModel.Player.Inventory[item].ItemStackCount > 1)
+                        else if (gsm.Player.Inventory[item].ItemStackCount > 1)
                         {
-                            viewModel.Player.Inventory[item].ItemStackCount -= 1;
+                            gsm.Player.Inventory[item].ItemStackCount -= 1;
                         }
                     }
                 }
@@ -69,11 +74,31 @@ namespace TBQuestGame.Models.Items
         }
         private void HealPlayer(object sender, EventArgs e)
         {
-            viewModel.PlayerHealth += this.HealingIncrement;
+            if (timerCount == 7)
+            {
+                healingTimer.Stop();
+            }
+            if (gsm.PlayerHealth < 100 && gsm.PlayerHealth > 0) {
+                gsm.PlayerHealth += this.HealingIncrement;
+                timerCount += 1;
+            }
+            else if (gsm.PlayerHealth >= 100)
+            {
+                gsm.PlayerHealth = 100;
+
+            }
+            else if (gsm.PlayerHealth <= 0)
+            {
+                gsm.Player.IsAlive = false;
+                gsm.PlayerHealth = 0;
+                gsm.Player.CheckPlayerDeathEvent(gsm, gsv); 
+                //Call Game Over
+            }
         }
         public BasicHealingPotion(GameSessionViewModel gsm, GameSessionView gsv)
         {
-            this.viewModel = gsm;
+            this.gsv = gsv;
+            this.gsm = gsm;
             this.HealingIncrement = 3.5;
             this.Name = "Basic Healing Potion";
             this.PicturePath = "/Images/BloodPot.png";

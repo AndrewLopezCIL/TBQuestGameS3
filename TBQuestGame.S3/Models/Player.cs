@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 using TBQuestGame.PresentationLayer;
 
 namespace TBQuestGame.Models
@@ -178,6 +180,22 @@ namespace TBQuestGame.Models
                     break;
             }
         }
+        public void CheckPlayerDeathEvent(GameSessionViewModel gsm, GameSessionView gsv)
+        {
+            if (gsm.PlayerHealth <= 0)
+            {
+                gsm.Player.IsAlive = false;
+                gsv.AttackButton.IsEnabled = false;
+                gsv.InventoryButton.IsEnabled = false;
+                gsv.SkillsButton.IsEnabled = false;
+                gsv.DialogueBox.Foreground = Brushes.Red;
+                gsv.DialogueBox.FontWeight = FontWeights.Bold;
+                gsv.DialogueBox.Text = "YOU HAVE FALLEN!";
+                gsv.TipsBox.FontWeight = FontWeights.Bold;
+                gsv.TipsBox.Text = "{ GAVE OVER }: Load last save or restart the game.";
+                Location.disableControls(gsv);
+            }
+            }
         public void playerLevelUp(GameSessionViewModel gsm, GameSessionView gsv)
         {
             gsm.PlayerLevel += 1; 
@@ -257,7 +275,7 @@ namespace TBQuestGame.Models
                         GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
                         fightingEnemy.Health -= BasicAttack;
                         GSV.EnemyHealthDisplay.Value = fightingEnemy.Health;
-                        GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
+                       // GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
                         gsm.EnemyDamage = fightingEnemy.BaseAttack;
                         gsm.EnemyHealth = fightingEnemy.Health;
                         gsm.EnemyLevel = fightingEnemy.Level;
@@ -267,9 +285,24 @@ namespace TBQuestGame.Models
                          if (fightingEnemy.Health <= 0)
                             {
                             fightingEnemy.Health = 0;
+                            //deals with removal of enemy from lists
                             fightingEnemy.Alive(GSV, gsm, fightingEnemy);
                             fightingEnemy.stopAttackingPlayer();
-                            GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
+                                    if (fightingEnemy.IsBoss == true) {
+                                        GSV.TipsBox.Foreground = Brushes.LightBlue;
+                                        GSV.TipsBox.FontSize = 15;
+                                        GSV.TipsBox.Text = "Congratulations, you have slain the boss!";
+                                    }
+                                    if (gsm.GameMap.CurrentLocation.BossFightRoom == true && gsm.CurrentEnemies.Count <= 0)
+                                    {
+                                        GSV.DialogueBox.Foreground = Brushes.LightBlue;
+                                        GSV.DialogueBox.FontSize = 15;
+                                        GSV.DialogueBox.FontWeight = FontWeights.Bold;
+                                        GSV.DialogueBox.HorizontalContentAlignment = HorizontalAlignment.Center;
+                                        GSV.DialogueBox.VerticalContentAlignment = VerticalAlignment.Center;
+                                        GSV.DialogueBox.Text = "You have cleared the boss room!";
+                                    }
+                            //GSV.DialogueBox.Text = fightingEnemy.Health.ToString();
                             fightingEnemy.onDeathRewardPlayer(gsm, fightingEnemy);
                             GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Hidden;
                             fightingEnemy.AttackingPlayer = false;
@@ -341,6 +374,7 @@ namespace TBQuestGame.Models
                                         gsm.EnemyLevel = 0;
                             }
                         }
+                         
                         break;
                     case AttackType.SkillOneAttack:
                         fightingEnemy.Health -= SkillOneAttack;

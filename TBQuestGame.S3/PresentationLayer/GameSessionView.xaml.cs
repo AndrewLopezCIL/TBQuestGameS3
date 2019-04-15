@@ -16,6 +16,7 @@ using TBQuestGame.PresentationLayer;
 using TBQuestGame.Models;
 using TBQuestGame.DataLayer;
 using TBQuestGame.Models.Items;
+using System.Collections.ObjectModel;
 
 namespace TBQuestGame.PresentationLayer
 {
@@ -68,7 +69,7 @@ namespace TBQuestGame.PresentationLayer
         private void SkillsButton_Click(object sender, RoutedEventArgs e)
         {
          
-            potion.potionUsedWithCooldown(_gameSessionViewModel);
+            //potion.potionUsedWithCooldown(_gameSessionViewModel);
             AddEnemyToList("warrior-black");
             //AddEnemyToList("warrior");
             //AddEnemyToList("wizard");
@@ -252,6 +253,76 @@ namespace TBQuestGame.PresentationLayer
                     break;
             }
         }
+        private void bossRoomEnterUpdate()
+        {
+            TipsBox.Foreground = Brushes.Red;
+            TipsBox.FontWeight = FontWeights.Bold;
+            TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
+            _gameSessionViewModel.PlayerShield += 35;
+            BossBattleStart();
+            LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
+            DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
+            _gameSessionViewModel.LocationWarningMessage = _gameSessionViewModel.CurrentLocation.LocationWarningMessage;
+            Location.disableControls(this);
+        }
+        private void setLocationWarningMessage(GameSessionViewModel gsm, GameSessionView gsv)
+        {
+            if (gsm.GameMap.CurrentLocation.MultiAttackLocation == true)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "Multi-Attack Area!";
+            }
+            else if (gsm.GameMap.CurrentLocation.BossFightRoom)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "[BOSS] Multi-Attack Area!";
+            }
+            else if (gsm.GameMap.CurrentLocation.MultiAttackLocation == false)
+            {
+                gsv.mapWindow.WarningDisplay.Text = "Moderate Area!";
+            }
+        }
+        private void ChanceOfFight()
+        {
+            if (_gameSessionViewModel.GameMap.CurrentLocation.ChanceOfFight == true)
+            {
+                int chance; 
+                Random fightChance = new Random();
+                Random willFight = new Random();
+                int willFightEnemy = willFight.Next(2);
+                ObservableCollection<string> enemyNames = new ObservableCollection<string>();
+                enemyNames.Add("Bandit");
+                enemyNames.Add("warrior-black");
+                enemyNames.Add("Warrior");
+                switch (willFightEnemy)
+                {
+                    case 0: 
+                        break;
+                    case 1:
+                        chance = fightChance.Next(3);
+
+                        if (chance == 1)
+                        {
+                            AddEnemyToList(enemyNames[1]);
+
+                        }
+                        else if (chance == 2)
+                        {
+                            AddEnemyToList(enemyNames[2]);
+
+                        }
+                        else if (chance == 0)
+                        {
+                            AddEnemyToList(enemyNames[0]);
+
+                        }
+                        break;
+                    default:
+                        break;
+                }
+             
+               
+                
+            }
+        }
         //
         // NORTH BUTTON 
         //
@@ -269,7 +340,8 @@ namespace TBQuestGame.PresentationLayer
 
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                setLocationWarningMesasge(_gameSessionViewModel, this); 
+                ChanceOfFight();
+                setLocationWarningMessage(_gameSessionViewModel, this); 
 
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
@@ -281,33 +353,6 @@ namespace TBQuestGame.PresentationLayer
                 mapWindow.CurrentLocationDisplay.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 mapWindow.LocationDescriptionDisplay.Text = _gameSessionViewModel.GameMap.CurrentLocation.Description;
             } 
-        }
-        private void bossRoomEnterUpdate()
-        {
-            TipsBox.Foreground = Brushes.Red;
-            TipsBox.FontWeight = FontWeights.Bold;
-            TipsBox.Text = "{ YOU'VE ENTERED A BOSS ROOM! FIGHT INITIATED }";
-            _gameSessionViewModel.PlayerShield += 35;
-            BossBattleStart();
-            LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
-            DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-            _gameSessionViewModel.LocationWarningMessage = _gameSessionViewModel.CurrentLocation.LocationWarningMessage;
-            Location.disableControls(this);
-        }
-        private void setLocationWarningMesasge(GameSessionViewModel gsm, GameSessionView gsv)
-        {
-            if (gsm.GameMap.CurrentLocation.MultiAttackLocation == true)
-            {
-                gsv.mapWindow.WarningDisplay.Text = "Multi-Attack Area!";
-            }
-            else if (gsm.GameMap.CurrentLocation.BossFightRoom)
-            {
-                gsv.mapWindow.WarningDisplay.Text = "[BOSS] Multi-Attack Area!";
-            }
-            else if (gsm.GameMap.CurrentLocation.MultiAttackLocation == false)
-            {
-                gsv.mapWindow.WarningDisplay.Text = "Moderate Area!";
-            }
         }
         //
         // EAST BUTTON
@@ -324,7 +369,9 @@ namespace TBQuestGame.PresentationLayer
                 }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                setLocationWarningMesasge(_gameSessionViewModel, this); 
+                ChanceOfFight();
+
+                setLocationWarningMessage(_gameSessionViewModel, this); 
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
                     if (!_gameSessionViewModel.bossesDefeated.Contains(_gameSessionViewModel.GameMap.CurrentLocation))
@@ -354,7 +401,9 @@ namespace TBQuestGame.PresentationLayer
                  }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                setLocationWarningMesasge(_gameSessionViewModel, this); 
+                ChanceOfFight();
+
+                setLocationWarningMessage(_gameSessionViewModel, this); 
 
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {
@@ -389,7 +438,9 @@ namespace TBQuestGame.PresentationLayer
                 }*/
                 LocationName.Text = _gameSessionViewModel.GameMap.CurrentLocation.Name;
                 DialogueBox.Text = _gameSessionViewModel.GameMap.CurrentLocation.LocationMessage;
-                setLocationWarningMesasge(_gameSessionViewModel, this); 
+                ChanceOfFight();
+
+                setLocationWarningMessage(_gameSessionViewModel, this); 
                 
                 if (_gameSessionViewModel.GameMap.CurrentLocation.BossFightRoom)
                 {

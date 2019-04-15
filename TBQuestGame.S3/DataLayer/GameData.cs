@@ -82,8 +82,7 @@ namespace TBQuestGame.DataLayer
                 BossFightRoom = false,
                 ChanceOfFight = true,
                 MultiAttackLocation = false,
-                LocationMessage = "You're in the Dark Forest and run into a monster!" +
-                "It starts attacking you!", LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Moderate Area!"
+                LocationMessage = "You're in the Dark Forest and run into a monster!", LocationWarningImage = "grayswordiconblack.png", LocationWarningMessage = "Moderate Area!"
            
             };
 

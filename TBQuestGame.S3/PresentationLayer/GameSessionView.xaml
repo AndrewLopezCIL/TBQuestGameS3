@@ -44,22 +44,37 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="195*"/>
+           <!-- <ColumnDefinition Width="195*"/> -->
             <ColumnDefinition Width="749*"/>
+            <ColumnDefinition Width="195*"/>
         </Grid.ColumnDefinitions>
-
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="230"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label x:Name="LocationLabel" Content="Current Location" HorizontalAlignment="Center" Style ="{StaticResource HeaderStyle}" Margin="356.303,90,239,44" Width="154" Grid.Column="1"/>
-        <TextBox x:Name="LocationName" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding CurrentLocation.Name}" IsReadOnly="True" Style="{StaticResource CommandBoxStyle}" Grid.Row="0" Height="35" Width="200" Margin="318.303,120,231,12" Grid.Column="1"/>
+        <Grid Grid.Column="0" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2.6*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+        <Label x:Name="LocationLabel" Content="Current Location" Style ="{StaticResource HeaderStyle}" Width="154" Grid.Column="1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontSize="18"/>
+            </Grid>
+        
+            <TextBox x:Name="LocationName" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Text="{Binding CurrentLocation.Name}" IsReadOnly="True" Style="{StaticResource CommandBoxStyle}"  Height="40" Width="200" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+            
+        </Grid>
 
-        <TextBox x:Name="DialogueBox" Text="{Binding CurrentLocation.LocationMessage, Mode=OneWay}" IsReadOnly="True" Width="575" Style="{StaticResource CommandBoxStyle}" Margin="13,10,356,85" Grid.ColumnSpan="2"/>
-        <Image x:Name="speakerIcon" Margin="395.303,10,260,83" Grid.Column="1"/>
-        <Button x:Name="GameOptions" Content="Menu" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" RenderTransformOrigin="0.479,0.735" Margin="0,10,0,0" Click="GameOptions_Click" Grid.Column="1"/>
-        <StackPanel Orientation="Horizontal" Margin="0,64,0,54" HorizontalAlignment="Right" Grid.Column="1">
+        <TextBox x:Name="DialogueBox" Text="{Binding CurrentLocation.LocationMessage, Mode=OneWay}" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsReadOnly="True" Width="480" Height="75" Style="{StaticResource CommandBoxStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="0"/>
+        <Image x:Name="speakerIcon" Width="53" Height="53" Grid.Column="0"/>
+        <Button x:Name="GameOptions"  Content="Menu" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" HorizontalAlignment="Right" Click="GameOptions_Click" Grid.Column="1"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Column="1">
             <Image x:Name="WarningPicture" Source="{Binding LocationWarningImage}" Margin="0,-1,0,0" Width="60" Height="45"/>
             <Button x:Name="OpenMap" Style="{StaticResource ButtonStyle}"  Click="OpenMap_Click" >
             <DockPanel>
@@ -69,7 +84,7 @@
 
         </Button>
         </StackPanel>
-        <TextBox x:Name="TipsBox" Width="473" Style="{StaticResource CommandBoxStyle}" IsReadOnly="True" Margin="13,88,458,10" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="TipsBox" Width="480" Height="75" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Style="{StaticResource CommandBoxStyle}" IsReadOnly="True" HorizontalAlignment="Left"  VerticalAlignment="Bottom" Grid.Column="0"/>
         <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="0,230,0,0.4" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="535"/>

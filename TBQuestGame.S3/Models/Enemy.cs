@@ -368,6 +368,8 @@ namespace TBQuestGame.Models
                     double difference = this.BaseAttack - gameSessionViewModel.PlayerShield;
                     gameSessionViewModel.PlayerShield = 0;
                     gameSessionViewModel.PlayerHealth -= difference;
+                    gameSessionViewModel.Player.CheckPlayerDeathEvent(gameSessionViewModel, gameSessionView);
+
                 }
                 //
                 // If the player's shield is more than the base attack (sufficient to withstand a hit) 
@@ -387,12 +389,15 @@ namespace TBQuestGame.Models
                     if (gameSessionViewModel.PlayerHealth > 0 && gameSessionViewModel.Player.IsAlive)
                     {
                         gameSessionViewModel.PlayerHealth -= BaseAttack;
+                        gameSessionViewModel.Player.CheckPlayerDeathEvent(gameSessionViewModel, gameSessionView);
+
                         //
                         //If the player has less than 0 health after the attack, then set it to 0 and set isAlive to false
                         //
                         if (gameSessionViewModel.PlayerHealth < 0)
                         {
                             gameSessionViewModel.PlayerHealth = 0;
+                            gameSessionViewModel.Player.CheckPlayerDeathEvent(gameSessionViewModel, gameSessionView);
                             gameSessionViewModel.Player.IsAlive = false;
                             attackTimer.Stop();
                         }

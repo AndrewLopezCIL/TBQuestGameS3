@@ -55,7 +55,7 @@
             <RowDefinition Height="*"/> 
         </Grid.RowDefinitions>
         <Label Content="Current Location:" Grid.Column="0" Grid.Row="0" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBox x:Name="CurrentLocationDisplay" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Text="{Binding CurrentLocation.Name}"/>
+        <TextBox x:Name="CurrentLocationDisplay" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="35" Text="{Binding GameMap.CurrentLocation.Name}"/>
 
         <Label Content="Location Warning:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource HeaderStyle}"/>
 
@@ -64,10 +64,10 @@
             <TextBox x:Name="WarningDisplay" IsReadOnly="True" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="200" Height="40"/>
         </StackPanel>
         <Label Content="Location Description:" Grid.Column="0" Grid.Row="2" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <TextBox x:Name="LocationDescriptionDisplay" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="325" TextWrapping="WrapWithOverflow" Height="100" Text="{Binding CurrentLocation.Description}"/>
+        <TextBox x:Name="LocationDescriptionDisplay" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="325" TextWrapping="WrapWithOverflow" Height="100" Text="{Binding GameMap.CurrentLocation.Description}"/>
         
         <Label Content="Accessible Locations:" Grid.Column="0" Grid.Row="3" Style="{StaticResource HeaderStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <ListBox Name="ALocations" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding AccessibleLocations}" SelectedItem="{Binding CurrentLocationName}">
+        <ListBox Name="ALocations" Grid.Row="3" Grid.Column="1" ItemsSource="{Binding GameMap.AccessibleLocations}" SelectedItem="{Binding CurrentLocationName}">
  
         </ListBox>
 
