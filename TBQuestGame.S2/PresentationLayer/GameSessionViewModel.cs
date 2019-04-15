@@ -319,77 +319,78 @@ namespace TBQuestGame.PresentationLayer
         #region METHODS 
         public void SelectedEnemySetter(int selected, GameSessionView gsv)
         {
-            foreach (Enemy item in CurrentEnemies)
-            {
+            /*
+            for (int i = 0; i < CurrentEnemies.Count; i++)
+			{ 
                 if (CurrentLocation.MultiAttackLocation == false)
                 {
-                    if (item.SelectedToFight == false)
+                    if (CurrentEnemies[i].SelectedToFight == false)
                     {
-                        item.stopAttackingPlayer();
+                        CurrentEnemies[i].stopAttackingPlayer();
                         gsv.DialogueBox.Text = "Stopped attacking player";
                     }
                 }
                 else if (CurrentLocation.MultiAttackLocation == true)
                 {
-                    if (item.SelectedToFight == false)
+                    if (CurrentEnemies[i].SelectedToFight == false)
                     {
-                        item.stopAttackingPlayer();
-                        item.startAttackingPlayer();
+                        CurrentEnemies[i].stopAttackingPlayer();
+                       CurrentEnemies[i].startAttackingPlayer();
                     }
                 }
-            }
+            }*/
             EnemySelected = true;  
             //
             // Most likely where the stacked damage problem is occuring
             //
-            foreach (Enemy E in CurrentEnemies)
-            {
+            for (int i = 0; i < CurrentEnemies.Count; i++)
+			{ 
 
-                E.refreshAllEnemiesPositions();
-                if (E.listPlacement == selected)
+                CurrentEnemies[i].refreshAllEnemiesPositions();
+                if (CurrentEnemies[i].listPlacement == selected)
                 { 
-                        CurrentFightingEnemyID = E.ID;
-                        CurrentFightingEnemyListPlacement = E.listPlacement;
+                        CurrentFightingEnemyID = CurrentEnemies[i].ID;
+                        CurrentFightingEnemyListPlacement = CurrentEnemies[i].listPlacement;
 
-                        Player.currentlyAttacking = E;
+                        Player.currentlyAttacking = CurrentEnemies[i];
 
-                        SelectingEnemy = E;
-                        if (E.SelectedToFight == false)
+                        SelectingEnemy = CurrentEnemies[i];
+                        if (CurrentEnemies[i].SelectedToFight == false)
                         {
-                            E.AttackingPlayer = true;
+                            CurrentEnemies[i].AttackingPlayer = true;
 
-                            E.startAttackingPlayer();
+                           CurrentEnemies[i].startAttackingPlayer();
 
-                            gsv.EnemyPicture.Source = E.PictureSource;
-                        gsv.enemyStatsWindow.EnemyStatsPicture.Source = E.PictureSource;
-                            E.SelectedToFight = true;
-                        EnemyDamage = E.BaseAttack;
-                        EnemyName = E.Name;
-                        EnemyHealth = E.Health;
-                        EnemyLevel = E.Level;
+                            gsv.EnemyPicture.Source = CurrentEnemies[i].PictureSource;
+                        gsv.enemyStatsWindow.EnemyStatsPicture.Source = CurrentEnemies[i].PictureSource;
+                            CurrentEnemies[i].SelectedToFight = true;
+                        EnemyDamage = CurrentEnemies[i].BaseAttack;
+                        EnemyName = CurrentEnemies[i].Name;
+                        EnemyHealth = CurrentEnemies[i].Health;
+                        EnemyLevel =CurrentEnemies[i].Level;
                         gsv.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Visible;
                         gsv.enemyStatsWindow.EnemyStatsPicture.Visibility = System.Windows.Visibility.Visible;
-                        gsv.EnemyHealthDisplay.Maximum = E.MaxHealth;
-                        gsv.EnemyHealthDisplay.Value = E.Health;
+                        gsv.EnemyHealthDisplay.Maximum = CurrentEnemies[i].MaxHealth;
+                        gsv.EnemyHealthDisplay.Value = CurrentEnemies[i].Health;
                         gsv.EnemyHealthDisplay.Minimum = 0;
                         
                         }
                         else
                         {
-                            E.SelectedToFight = true;
+                            CurrentEnemies[i].SelectedToFight = true;
                         }
                  }
-                else if (E.listPlacement != selected)
+                else if (CurrentEnemies[i].listPlacement != selected)
                 {
-                    if (E.listPlacement != selected && E.SelectedToFight == true)
+                    if (CurrentEnemies[i].listPlacement != selected && CurrentEnemies[i].SelectedToFight == true)
                     {
-                    E.SelectedToFight = false;
-                        E.AttackingPlayer = false;
-                        E.stopAttackingPlayer();
+                        CurrentEnemies[i].SelectedToFight = false;
+                        CurrentEnemies[i].AttackingPlayer = false;
+                        CurrentEnemies[i].stopAttackingPlayer();
                     }
                     else
                     {
-                        E.SelectedToFight = false;
+                        CurrentEnemies[i].SelectedToFight = false;
                     } 
                 }
             } 

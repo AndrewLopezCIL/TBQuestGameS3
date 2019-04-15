@@ -198,7 +198,7 @@ namespace TBQuestGame.Models
             // Send id of currentfightingenemy and set fightingenemy to currentenemieswiththat position
             // What if current fighting id is 15 and the list is only 4 big, then it would be out of bounds error
             // Need to look for enemy with a specific listPlacement 
-            Enemy fightingEnemy = currentlyAttacking;
+            Enemy fightingEnemy = gsm.Player.currentlyAttacking;
             attackType = typeOfAttack;
             //
             // ADD IN, IF NOT SELECTED THEN AUTOMATICALLY ATTACK FIRST ENEMY IN LIST
@@ -207,6 +207,15 @@ namespace TBQuestGame.Models
                 //If current enemy is alive/has more than 0 health
                 if (PlayersCurrentState == PlayerState.Fighting) {
                     bool anEnemyHasSelection = false;
+                    for(int enemy = 0; enemy < gsm.CurrentEnemies.Count; enemy++){
+                            if(gsm.CurrentEnemies[enemy].SelectedToFight == true){
+                                anEnemyHasSelection = true;break;
+                            }
+                            else if(gsm.CurrentEnemies[enemy].SelectedToFight == false){
+                                 anEnemyHasSelection = false;
+                                }                              
+                            }
+                    /*
                     foreach (Enemy enemy in gsm.CurrentEnemies)
                     { 
                         if (enemy.SelectedToFight == true)
@@ -218,6 +227,8 @@ namespace TBQuestGame.Models
                             anEnemyHasSelection = false;
                         } 
                     }
+                    */
+
                     if (anEnemyHasSelection == false)
                     {
                         gsm.Player.currentlyAttacking = gsm.CurrentEnemies[0];
@@ -263,13 +274,19 @@ namespace TBQuestGame.Models
                             GSV.EnemyHealthDisplay.Visibility = System.Windows.Visibility.Hidden;
                             fightingEnemy.AttackingPlayer = false;
                             GSV.enemyStatsWindow.EnemyStatsPicture.Visibility = System.Windows.Visibility.Hidden;
-                                    foreach (Enemy enemy in gsm.CurrentEnemies)
+                              for(int enemy = 0; enemy < gsm.CurrentEnemies.Count; enemy++){
+                                   if(gsm.CurrentEnemies[enemy].SelectedToFight == true){
+                                            gsm.CurrentEnemies[enemy].SelectedToFight = false;
+                                        }
+                                }/*
+                                foreach (Enemy enemy in gsm.CurrentEnemies)
                                     {
                                         if (enemy.SelectedToFight == true)
                                         {
                                             enemy.SelectedToFight = false;
                                         } 
                                     }
+                                    */
                             fightingEnemy.SelectedToFight = false;
                             
                             if (gsm.PlayerXP >= gsm.MaxPlayerXP)
