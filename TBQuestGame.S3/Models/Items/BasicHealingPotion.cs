@@ -42,6 +42,7 @@ namespace TBQuestGame.Models.Items
             }
 
         }      
+        
         public void potionUsed(object sender, EventArgs e)
         {
             healingCooldown.Stop();

@@ -147,6 +147,9 @@ namespace TBQuestGame.PresentationLayer
             {
                 if (gsm.Player.Inventory[item].HasPlayerInventorySelection == true)
                 {
+                    //
+                    // If the item in player's inventory is a consumable, and it hasn't been consumed then use.
+                    //
                     if (gsm.Player.Inventory[item].Consumable == true && gsm.Player.Inventory[item].ConsumableUsed == false)
                     {
                         gsm.Player.Inventory[item].ConsumableUsed = true;
@@ -160,6 +163,23 @@ namespace TBQuestGame.PresentationLayer
                             default:
                                 break;
                         }
+                    }
+                    else if(gsm.Player.Inventory[item].CanEquip == true){
+                        switch (gsm.Player.Inventory[item].Name)
+	                        {
+                            case "Ruby Sword":
+                                //gsm.PlayerBaseAttack = gsm.Player.Inventory[item].dama
+                                //
+                                // Set the currently equiped weapon property in player's class to equal
+                                // the Ruby Sword, then add the old equiped weapon to the player's inventory
+                                // Remove Ruby Sword from player's inventory when equiped 
+                                //
+                                break;
+                                case "Excalibur":
+                                    break;
+		                        default:
+                         break;
+	}    
                     }
                 }
             }
