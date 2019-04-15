@@ -84,7 +84,7 @@ namespace TBQuestGame.Models
             get { return _hasPlayerInventorySelection; }
             set { _hasPlayerInventorySelection = value; }
         }
-
+        
         //
         // Special Object
         //
