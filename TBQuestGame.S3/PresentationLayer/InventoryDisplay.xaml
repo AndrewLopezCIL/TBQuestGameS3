@@ -1,0 +1,28 @@
+﻿<Window x:Class="TBQuestGame.PresentationLayer.InventoryDisplay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
+        mc:Ignorable="d"
+        Title="InventoryDisplay" ResizeMode="NoResize" Height="200" Width="350" Closing="Window_Closing" Icon="/Images/sword-icon.png">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TabControl Grid.Row="1" Background="AliceBlue">
+            <TabItem x:Name="PlayerInventoryTab" Header="Inventory" Background="LightBlue">
+                <ListBox x:Name="PlayerInventoryList" ItemsSource="{Binding PlayerInventory}" SelectionChanged="PlayerInventoryList_SelectionChanged" MouseDoubleClick="PlayerInventoryList_MouseDoubleClick">
+                    
+                </ListBox>
+            </TabItem>
+            <TabItem x:Name="LocationLootTab" Header="Location's Loot" Background="LightBlue"> 
+                <ListBox x:Name="LocationLootList" ItemsSource="{Binding LocationLootableItems}" MouseDoubleClick="LocationLootList_MouseDoubleClick" SelectionChanged="LocationLootList_SelectionChanged" >
+                    
+                </ListBox>
+                
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
