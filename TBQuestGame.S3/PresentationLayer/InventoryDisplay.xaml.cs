@@ -164,5 +164,79 @@ namespace TBQuestGame.PresentationLayer
                 }
             }
         }
+          
+        private void Label_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DropItem.IsEnabled = true;
+            DropAll.IsEnabled = true;
+        }
+
+        private void Label_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            DropItem.IsEnabled = false;
+            DropAll.IsEnabled = false;
+        }
+         
+        private void DropItem_Click(object sender, RoutedEventArgs e)
+        {
+            for (int item = 0; item < gsm.Player.Inventory.Count; item++)
+            { 
+                if (gsm.Player.Inventory[item].HasPlayerInventorySelection == true)
+                {
+                    if (gsm.Player.Inventory[item].ItemStackCount > 1)
+                    {
+                        gsm.Player.Inventory[item].ItemStackCount -= 1;
+                         bool found = false;
+                        for (int items = 0; items < gsm.GameMap.CurrentLocation.LootableItems.Count; items++)
+                        {
+                            
+                            if (gsm.GameMap.CurrentLocation.LootableItems[items].Name == gsm.Player.Inventory[item].Name)
+                            {
+                                gsm.GameMap.CurrentLocation.LootableItems[items].ItemStackCount += 1;
+                                found = true;
+                                break;
+                            }
+                            else if(gsm.GameMap.CurrentLocation.LootableItems[items].Name != gsm.Player.Inventory[item].Name)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found == false)
+                        {
+                            gsm.GameMap.CurrentLocation.LootableItems.Add(gsm.Player.Inventory[item]);
+                        }
+                    } 
+                    else if (gsm.Player.Inventory[item].ItemStackCount == 1)
+                    {
+
+                        bool found = false;
+                        for (int items = 0; items < gsm.GameMap.CurrentLocation.LootableItems.Count; items++)
+                        {
+
+                            if (gsm.GameMap.CurrentLocation.LootableItems[items].Name == gsm.Player.Inventory[item].Name)
+                            {
+                                gsm.GameMap.CurrentLocation.LootableItems[items].ItemStackCount += 1;
+                                found = true;
+                                break;
+                            }
+                            else if (gsm.GameMap.CurrentLocation.LootableItems[items].Name != gsm.Player.Inventory[item].Name)
+                            {
+                                found = false;
+                            }
+                        }
+                        if (found == false)
+                        {
+                            gsm.GameMap.CurrentLocation.LootableItems.Add(gsm.Player.Inventory[item]);
+                        }
+                        gsm.Player.Inventory.RemoveAt(item);
+
+                    }
+                }
+                else if (gsm.Player.Inventory[item].HasPlayerInventorySelection == false)
+                {
+
+                }
+            }
+        }
     }
 }

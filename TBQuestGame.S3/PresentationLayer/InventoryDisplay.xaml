@@ -5,24 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TBQuestGame.PresentationLayer"
         mc:Ignorable="d"
-        Title="InventoryDisplay" ResizeMode="NoResize" Height="200" Width="350" Closing="Window_Closing" Icon="/Images/sword-icon.png">
+        Title="InventoryDisplay" ResizeMode="NoResize" Height="250" Width="350" Closing="Window_Closing" Icon="/Images/sword-icon.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="35"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
+        <Label Content="Inventory and Vicinity Loot" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" FontFamily="cambria"/>
         <TabControl Grid.Row="1" Background="AliceBlue">
-            <TabItem x:Name="PlayerInventoryTab" Header="Inventory" Background="LightBlue">
+            <TabItem x:Name="PlayerInventoryTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Inventory" MouseLeftButtonDown="Label_MouseLeftButtonDown"/>
+                </TabItem.Header>
                 <ListBox x:Name="PlayerInventoryList" ItemsSource="{Binding PlayerInventory}" SelectionChanged="PlayerInventoryList_SelectionChanged" MouseDoubleClick="PlayerInventoryList_MouseDoubleClick">
                     
                 </ListBox>
             </TabItem>
-            <TabItem x:Name="LocationLootTab" Header="Location's Loot" Background="LightBlue"> 
+            <TabItem x:Name="LocationLootTab" Background="LightBlue">
+                <TabItem.Header>
+                    <Label Content="Location's Loot" MouseLeftButtonDown="Label_MouseLeftButtonDown_1" />
+                </TabItem.Header>
                 <ListBox x:Name="LocationLootList" ItemsSource="{Binding LocationLootableItems}" MouseDoubleClick="LocationLootList_MouseDoubleClick" SelectionChanged="LocationLootList_SelectionChanged" >
                     
                 </ListBox>
                 
             </TabItem>
         </TabControl>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+        <Button x:Name="DropItem" Content="Drop" Width="75" Height="25" Margin="0,0,10,0" Click="DropItem_Click"/>
+        <Button x:Name="DropAll" Content="Drop All" Width="75" Height="25"/>
+        </StackPanel>
     </Grid>
 </Window>
